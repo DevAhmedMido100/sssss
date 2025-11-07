@@ -1,0 +1,60 @@
+# .slugignore - ملفات ومجلدات لا تُنشر على Render
+# هذا يقلل من حجم التنصيب ويُسرع العملية
+
+# Documentation
+*.md
+!RENDER_DEPLOYMENT.md
+README.md
+CHANGELOG.md
+TROUBLESHOOTING.md
+PROJECT_OVERVIEW.md
+
+# Development files
+.git/
+.github/
+.gitignore
+.editorconfig
+.vscode/
+.idea/
+
+# Test files
+tests/
+test_*.py
+*_test.py
+
+# Media files (يمكن رفعها للـ storage بدلاً من الكود)
+saved_media/
+اصوات/
+attached_assets/*.jpg
+attached_assets/*.png
+attached_assets/*.gif
+attached_assets/*.mp4
+
+# Logs
+*.log
+bot_logs/
+
+# Backup files
+*.backup
+*.backup.*
+
+# Replit specific
+.replit
+replit.nix
+.upm/
+.config/
+
+# Optimization (ليست ضرورية للإنتاج)
+optimization/INTEGRATION_STATUS.md
+optimization/QUICK_START.md
+optimization/README.md
+optimization/SPEED_OPTIMIZATION_GUIDE.md
+
+# Documentation in المميزات
+المميزات/*.md
+
+# Session files (يجب استخدام STRING_SESSION بدلاً من ذلك)
+*.session
+*.session-journal
+factory.session
+factory_lock.json

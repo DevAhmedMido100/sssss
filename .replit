@@ -1,0 +1,99 @@
+entrypoint = "main.py"
+modules = ["python-3.11", "python3", "dotnet-10.0", "bash", "bun-1.2", "bun-1.1", "c-clang14", "postgresql-17", "python-3.9"]
+
+[nix]
+channel = "stable-25_05"
+packages = ["cargo", "ffmpeg", "ffmpeg-full", "freetype", "lcms2", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pkg-config", "rustc", "tcl", "tk", "zlib"]
+
+[unitTest]
+language = "python3"
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix"]
+
+[deployment]
+run = ["python", "deploy_app.py"]
+deploymentTarget = "vm"
+
+[agent]
+expertMode = true
+integrations = ["python_openai:1.0.0"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Deploy Platform"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "StringGen Bot"
+
+[[workflows.workflow]]
+name = "Server"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py"
+
+[[workflows.workflow]]
+name = "Deploy Platform"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python deploy_app.py"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow]]
+name = "StringGen Bot"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd stringgen_bot && python stringgen.py"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "whisper Bot"
+mode = "sequential"
+author = 48796982
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python whisper_bot.py"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 42077
+externalPort = 3001
+
+[[ports]]
+localPort = 44483
+externalPort = 3000
+
+[[ports]]
+localPort = 46417
+externalPort = 3002
